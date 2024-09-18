@@ -1,5 +1,11 @@
 import os
-
+import sys, pdb
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# 获取父目录（即与text目录同级的目录）
+parent_dir = os.path.dirname(current_dir)
+# 将该目录添加到Python路径
+sys.path.append(parent_dir) #把GPT_Sovits加到搜索目录中，他之下的text就可以找到
+sys.path.append(os.path.dirname(parent_dir)) #把new加到搜索目录中，他之下的tool就可以找到
 inp_text = os.environ.get("inp_text")
 exp_name = os.environ.get("exp_name")
 i_part = os.environ.get("i_part")
@@ -14,7 +20,7 @@ import torch
 is_half = eval(os.environ.get("is_half", "True")) and torch.cuda.is_available()
 import math, traceback
 import multiprocessing
-import sys, pdb
+
 
 now_dir = os.getcwd()
 sys.path.append(now_dir)

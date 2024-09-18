@@ -3,7 +3,8 @@ import traceback
 from scipy.io import wavfile
 # parent_directory = os.path.dirname(os.path.abspath(__file__))
 # sys.path.append(parent_directory)
-from tools.my_utils import load_audio
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from my_utils import load_audio
 from slicer2 import Slicer
 
 def slice(inp,opt_root,threshold,min_length,min_interval,hop_size,max_sil_kept,_max,alpha,i_part,all_part):

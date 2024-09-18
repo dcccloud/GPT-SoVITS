@@ -2,6 +2,13 @@ import warnings
 warnings.filterwarnings("ignore")
 import utils, os
 hps = utils.get_hparams(stage=2)
+import sys
+# 获取当前文件的目录
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# 获取父目录（即与text目录同级的目录）
+parent_dir = os.path.dirname(current_dir)
+# 将该目录添加到Python路径
+sys.path.append(parent_dir) #把new加到搜索目录中，他之下的text就可以找到
 os.environ["CUDA_VISIBLE_DEVICES"] = hps.train.gpu_numbers.replace("-", ",")
 import torch
 from torch.nn import functional as F

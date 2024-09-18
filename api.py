@@ -149,6 +149,15 @@ now_dir = os.getcwd()
 sys.path.append(now_dir)
 sys.path.append("%s/GPT_SoVITS" % (now_dir))
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# 将当前目录添加到 sys.path
+sys.path.append(current_dir)
+
+# 将 GPT_SoVITS 目录添加到 sys.path
+gpt_sovits_dir = os.path.join(current_dir, "GPT_SoVITS")
+sys.path.append(gpt_sovits_dir)
+
 import signal
 import LangSegment
 from time import time as ttime
@@ -935,6 +944,9 @@ async def tts_endpoint(
 ):
     return handle(refer_wav_path, prompt_text, prompt_language, text, text_language, cut_punc, top_k, top_p, temperature, speed, inp_refs)
 
+@app.get("/check_service")
+async def check_service():
+    return "ok"
 
 if __name__ == "__main__":
     uvicorn.run(app, host=host, port=port, workers=1)

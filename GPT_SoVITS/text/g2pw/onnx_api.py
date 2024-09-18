@@ -81,15 +81,15 @@ class G2PWOnnxConverter:
                  model_source: str=None,
                  enable_non_tradional_chinese: bool=False):
         uncompress_path = download_and_decompress(model_dir)
-
+        mnt_onnx_path = os.environ.get('G2PW',os.path.join(uncompress_path, 'g2pW.onnx'))
         sess_options = onnxruntime.SessionOptions()
         sess_options.graph_optimization_level = onnxruntime.GraphOptimizationLevel.ORT_ENABLE_ALL
         sess_options.execution_mode = onnxruntime.ExecutionMode.ORT_SEQUENTIAL
         sess_options.intra_op_num_threads = 2
         try:
-            self.session_g2pW = onnxruntime.InferenceSession(os.path.join(uncompress_path, 'g2pW.onnx'),sess_options=sess_options, providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
+            self.session_g2pW = onnxruntime.InferenceSession(mnt_onnx_path,sess_options=sess_options, providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
         except:
-            self.session_g2pW = onnxruntime.InferenceSession(os.path.join(uncompress_path, 'g2pW.onnx'),sess_options=sess_options, providers=['CPUExecutionProvider'])
+            self.session_g2pW = onnxruntime.InferenceSession(mnt_onnx_path,sess_options=sess_options, providers=['CPUExecutionProvider'])
         self.config = load_config(
             config_path=os.path.join(uncompress_path, 'config.py'),
             use_default=True)

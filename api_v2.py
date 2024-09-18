@@ -447,7 +447,9 @@ async def set_sovits_weights(weights_path: str = None):
         return JSONResponse(status_code=400, content={"message": f"change sovits weight failed", "Exception": str(e)})
     return JSONResponse(status_code=200, content={"message": "success"})
 
-
+@APP.get("/check_service")
+async def check_service():
+    return "ok"
 
 if __name__ == "__main__":
     try:

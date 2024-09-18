@@ -6,6 +6,13 @@ inp_wav_dir=                        os.environ.get("inp_wav_dir")
 exp_name=                           os.environ.get("exp_name")
 i_part=                             os.environ.get("i_part")
 all_parts=                          os.environ.get("all_parts")
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# 获取父目录（即与text目录同级的目录）
+parent_dir = os.path.dirname(current_dir)
+# 将该目录添加到Python路径
+sys.path.append(parent_dir) #把GPT_Sovits加到搜索目录中，他之下的text就可以找到
+sys.path.append(os.path.dirname(parent_dir)) #把new加到搜索目录中，他之下的tool就可以找到
+
 if "_CUDA_VISIBLE_DEVICES" in os.environ:
      os.environ["CUDA_VISIBLE_DEVICES"] = os.environ["_CUDA_VISIBLE_DEVICES"]
 from feature_extractor import cnhubert
