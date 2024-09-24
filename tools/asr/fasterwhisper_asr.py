@@ -1,14 +1,20 @@
 import argparse
 import os
 import traceback
-
+import sys
 os.environ["HF_ENDPOINT"]          = "https://hf-mirror.com"
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 import torch
 from faster_whisper import WhisperModel
 from tqdm import tqdm
-
+# 获取当前文件的目录
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# 获取父目录（即与text目录同级的目录）
+parent_dir = os.path.dirname(current_dir)
+# 将该目录添加到Python路径
+sys.path.append(parent_dir) #把GPT_Sovits加到搜索目录中，他之下的text就可以找到
+sys.path.append(os.path.dirname(parent_dir)) #把new加到搜索目录中，他之下的tool就可以找到
 from tools.asr.config import check_fw_local_models
 
 language_code_list = [
@@ -45,7 +51,11 @@ def execute_asr(input_folder, output_folder, model_size, language, precision):
     print("loading faster whisper model:",model_size,model_path)
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     try:
-        model = WhisperModel(model_path, device=device, compute_type=precision)
+        model = WhisperModel(model_path, 
+                             device=device, 
+                             compute_type=precision,
+                             download_root=os.environ["FASTER_WHISPER_ROOT"]
+                             )
     except:
         return print(traceback.format_exc())
     
