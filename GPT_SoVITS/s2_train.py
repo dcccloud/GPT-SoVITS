@@ -127,7 +127,7 @@ def run(rank, n_gpus, hps):
         collate_fn=collate_fn,
         batch_sampler=train_sampler,
         persistent_workers=False,
-        prefetch_factor=4,
+        prefetch_factor=None,
     )
     # if rank == 0:
     #     eval_dataset = TextAudioSpeakerLoader(hps.data.validation_files, hps.data, val=True)
