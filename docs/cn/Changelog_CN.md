@@ -1,5 +1,6 @@
 ### 20240121更新
 
+尝试submodule更新
 1-config添加is_share，诸如colab等场景可以将此改为True，来使得webui映射到公网
 
 2-WebUI添加英文系统英文翻译适配
