@@ -14,7 +14,7 @@ optimizer:
 data:
   max_eval_sample: 8
   max_sec: 54
-  num_workers: 4
+  num_workers: 0
   pad_val: 1024 # same with EOS in model
 model:
   vocab_size: 1025

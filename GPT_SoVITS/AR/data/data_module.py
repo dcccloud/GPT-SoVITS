@@ -45,6 +45,7 @@ class Text2SemanticDataModule(LightningDataModule):
         batch_size=self.config["train"]["batch_size"]//2 if self.config["train"].get("if_dpo",False)==True else self.config["train"]["batch_size"]
         batch_size = max(min(batch_size,len(self._train_dataset)//4),1)#防止不保存
         sampler = DistributedBucketSampler(self._train_dataset, batch_size=batch_size)
+        print(f"GPT DATALOADER num workers: {self.num_workers}")
         return DataLoader(
             self._train_dataset,
             batch_size=batch_size,
@@ -52,7 +53,7 @@ class Text2SemanticDataModule(LightningDataModule):
             collate_fn=self._train_dataset.collate,
             num_workers=self.num_workers,
             persistent_workers=True,
-            prefetch_factor=16,
+            prefetch_factor=None,
         )
 
     def val_dataloader(self):
@@ -61,9 +62,9 @@ class Text2SemanticDataModule(LightningDataModule):
             batch_size=1,
             shuffle=False,
             collate_fn=self._train_dataset.collate,
-            num_workers=max(self.num_workers, 12),
+            num_workers=0,
             persistent_workers=True,
-            prefetch_factor=16,
+            prefetch_factor=None,
         )
 
     # 这个会使用到嘛？
