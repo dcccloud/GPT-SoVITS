@@ -57,7 +57,8 @@ def execute_asr(input_folder, output_folder, model_size, language, precision):
                              download_root=os.environ["FASTER_WHISPER_ROOT"]
                              )
     except:
-        return print(traceback.format_exc())
+        print(traceback.format_exc())
+        raise Exception("加载Faster Whisper模型时出错")
     
     input_file_names = os.listdir(input_folder)
     input_file_names.sort()
